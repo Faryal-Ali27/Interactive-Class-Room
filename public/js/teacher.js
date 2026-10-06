@@ -36,6 +36,8 @@
   var queue = [], queueSynced = false, pollT = null, busy = false, fails = 0;
   function loadQueue() { try { queue = JSON.parse(LS.get('cp-queue:' + code) || '[]'); } catch (e) { queue = []; } }
   var isLocal = /^(localhost|127\.|0\.0\.0\.0)/.test(location.hostname);
+  /* Main public address students open. QR and Copy link always use this, never a protected preview URL. */
+  var PUBLIC_URL = 'https://interactive-class-room.vercel.app';
 
   /* ---- toast ---- */
   function toast(m) {
@@ -196,7 +198,7 @@
     $('code').textContent = code; $('chipCode').textContent = code; $('chipCodeMob').textContent = code;
     $('qtext').value = LS.get('cp-draft:' + code) || '';
     fetch('/api/info').then(function (r) { return r.json(); }).then(function (i) {
-      studentUrl = (isLocal ? i.urls[0] : location.origin) + '/student';
+      studentUrl = (isLocal ? i.urls[0] : PUBLIC_URL) + '/student';
       $('url').textContent = studentUrl; drawQR();
     });
     renderQueue(); show('home');
@@ -526,7 +528,7 @@
     fetch('/api/state?role=teacher&full=1&code=' + encodeURIComponent(code) + '&tkey=' + encodeURIComponent(tkey), { cache: 'no-store' })
       .then(function (r) { return r.json(); }).then(function (v) { last = v; csv(); }).catch(function () { csv(); });
   };
-  $('copyLink').onclick = function () { copyText(studentUrl || location.origin + '/student', 'Student link copied'); };
+  $('copyLink').onclick = function () { copyText(studentUrl || PUBLIC_URL + '/student', 'Student link copied'); };
   $('qrBig').onclick = function () { drawQR(); $('qrOverlay').hidden = false; };
   $('qrClose').onclick = function () { $('qrOverlay').hidden = true; };
   $('qrOverlay').onclick = function (e) { if (e.target === $('qrOverlay')) $('qrOverlay').hidden = true; };
