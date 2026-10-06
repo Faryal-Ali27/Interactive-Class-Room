@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <title>ClassPulse · Student</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="ClassPulse – join your teacher's live class session.">
+  <meta name="theme-color" content="#059669">
+  <link rel="icon" type="image/svg+xml" href="/img/logo.svg">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/icons.js"></script>
+  <script src="/js/theme.js"></script>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="/"><img src="/img/logo.svg" alt="">Class<span>Pulse</span></a>
+  <div class="right">
+    <span class="chip" id="me" hidden></span>
+    <button class="icon" id="themeBtn" aria-label="Toggle theme"></button>
+  </div>
+</header>
+
+<main class="sw">
+
+  <!-- ======= Join screen ======= -->
+  <section id="join" class="card" style="margin-top:24px">
+    <h2 style="margin-bottom:16px">Join your class</h2>
+    <input
+      id="codeIn"
+      inputmode="numeric"
+      maxlength="6"
+      placeholder="Room code"
+      autocomplete="off"
+      style="font-size:28px;text-align:center;letter-spacing:10px;font-weight:800"
+    >
+    <input id="nameIn" maxlength="20" placeholder="Your name" autocomplete="name">
+    <button class="full" id="joinBtn"><i data-ic="chevron-right" data-s="16"></i>Join class</button>
+    <p id="err" style="margin-top:10px;text-align:center;color:var(--bad);font-size:13px;font-weight:600"></p>
+  </section>
+
+  <!-- ======= Room (shown after joining) ======= -->
+  <div id="room" hidden>
+
+    <div id="conn" class="conn" hidden>Reconnecting… your work is saved</div>
+    <p class="mute center sess-info" id="sessInfo"></p>
+
+    <!-- TAB: Question -->
+    <div id="p-q">
+      <!-- Waiting state -->
+      <div class="card wait-card" id="wait">
+        <div style="color:var(--brand);display:flex;justify-content:center">
+          <i data-ic="activity" data-s="42"></i>
+        </div>
+        <h2 id="wt">You're in!</h2>
+        <p class="mute" id="wp">Waiting for your teacher to send a question…</p>
+      </div>
+
+      <!-- Active question card -->
+      <div class="card" id="qcard" hidden>
+        <div class="qcard-top">
+          <span class="pill live" id="st"></span>
+          <span class="timer" id="timer"></span>
+        </div>
+        <p class="qt-text" id="qt"></p>
+        <div id="choices"></div>
+        <div class="fb-msg" id="fb" hidden></div>
+      </div>
+
+      <!-- Confused button (always visible on Question tab) -->
+      <button class="confused-btn" id="cbtn">
+        <i data-ic="help-circle" data-s="18"></i>&ensp;I'm confused
+      </button>
+    </div>
+
+    <!-- TAB: Feedback -->
+    <div id="p-f" hidden>
+      <div class="card">
+        <h2 style="margin-bottom:14px">How's the pace?</h2>
+        <div class="seg" id="pace">
+          <button class="ghost" data-v="fast">
+            <i data-ic="fast-forward" data-s="18"></i>Too fast
+          </button>
+          <button class="ghost" data-v="ok">
+            <i data-ic="check-circle" data-s="18"></i>Just right
+          </button>
+          <button class="ghost" data-v="slow">
+            <i data-ic="rewind" data-s="18"></i>Too slow
+          </button>
+        </div>
+      </div>
+      <div class="card">
+        <h2 style="margin-bottom:14px">React to the lesson</h2>
+        <div class="reacts" id="reacts"></div>
+      </div>
+      <p class="mute center" style="margin-top:6px">Your feedback is anonymous.</p>
+    </div>
+
+    <!-- TAB: Ask teacher -->
+    <div id="p-a" hidden>
+      <div class="card">
+        <h2 style="margin-bottom:14px">Ask your teacher</h2>
+        <input id="ask" maxlength="200" placeholder="Type your question…">
+        <button class="full" id="askBtn"><i data-ic="send" data-s="16"></i>Send question</button>
+      </div>
+      <div id="qalist"></div>
+    </div>
+
+    <!-- TAB: Scores -->
+    <div id="p-l" hidden>
+      <div class="card">
+        <h2 style="margin-bottom:14px">Leaderboard</h2>
+        <div id="lb"></div>
+      </div>
+      <p class="mute center" id="myPts" style="margin-bottom:10px"></p>
+      <button class="ghost full" id="leaveBtn"><i data-ic="log-out" data-s="16"></i>Leave this class</button>
+    </div>
+
+    <!-- Bottom navigation -->
+    <nav class="nav" id="nav">
+      <button class="on" data-p="q">
+        <i data-ic="help-circle" data-s="20"></i>Question
+      </button>
+      <button data-p="f">
+        <i data-ic="sliders" data-s="20"></i>Feedback
+      </button>
+      <button data-p="a">
+        <i data-ic="message-square" data-s="20"></i>Ask
+      </button>
+      <button data-p="l">
+        <i data-ic="trophy" data-s="20"></i>Scores
+      </button>
+    </nav>
+
+  </div>
+</main>
+
+<div id="toast"></div>
+<script src="/js/student.js"></script>
+</body>
+</html>
